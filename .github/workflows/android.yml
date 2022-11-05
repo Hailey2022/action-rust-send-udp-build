@@ -1,0 +1,19 @@
+name: android
+
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: android
+        run: cd && cargo install cross && git clone https://github.com/Hailey2022/rust-send-udp && cd rust-send-udp && cross build --release --target aarch64-linux-android
+        
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: ~/rust-send-udp/target/aarch64-linux-android/release/rust-send-udp
